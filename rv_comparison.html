@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RV Rental Comparison - August 21-28, 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #1a1a2e;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            font-size: 0.95em;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .rv-name {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .price {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.05em;
+        }
+
+        .rating {
+            font-weight: 600;
+            color: #f39c12;
+        }
+
+        .website-badge {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0288d1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .rv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .rv-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .rv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .card-title {
+            position: relative;
+            z-index: 1;
+            font-size: 1.35em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-location {
+            position: relative;
+            z-index: 1;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .card-price-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 25px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .price-label {
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .price-value {
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .feature {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .feature:last-child {
+            border-bottom: none;
+        }
+
+        .feature-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .feature-value {
+            color: #1a1a2e;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .rating-badge {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .badge-primary {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-success {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .card-footer {
+            background: #f9f9f9;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .platform-link {
+            font-size: 0.85em;
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .platform-link:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .card-photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            height: 200px;
+            background: #ddd;
+            overflow: hidden;
+        }
+
+        .card-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .booking-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: transform 0.2s;
+        }
+
+        .booking-link:hover {
+            transform: scale(1.05);
+        }
+
+        .best-value {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .best-rating {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .best-space {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .summary {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary h2 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #1a1a2e;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .summary-item {
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .summary-item h3 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .summary-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .best-pick {
+            border-left-color: #f5576c;
+        }
+
+        .best-pick h3 {
+            color: #f5576c;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .rv-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚐 RV Rental Comparison</h1>
+            <div class="subtitle">Idaho Falls & Bozeman</div>
+            <div class="tagline">August 21-28, 2026 | 4 People | Class C Motorhomes | Under $3,000</div>
+        </header>
+
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>RV Name</th>
+                        <th>Location</th>
+                        <th>Length</th>
+                        <th>Total Cost</th>
+                        <th>Beds</th>
+                        <th>MPG</th>
+                        <th>Rating</th>
+                        <th>Book Now</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rv-name">2019 Jayco Redhawk 26XD</td>
+                        <td>Idaho Falls</td>
+                        <td>26 ft</td>
+                        <td class="price">$2,820</td>
+                        <td>2 Queen</td>
+                        <td>—</td>
+                        <td class="rating">4.8 ⭐</td>
+                        <td><a href="https://rvshare.com/rv-rental?location=Idaho%20Falls%2C%20Montana&start_date=2026-08-21&end_date=2026-08-28&rv_class=Class%20C%20Motor%20Home" class="booking-link">View & Book</a></td>
+                    </tr>
+                    <tr>
+                        <td class="rv-name">2009 Thor Motor Coach Majestic</td>
+                        <td>Idaho Falls</td>
+                        <td>29 ft</td>
+                        <td class="price">$1,940</td>
+                        <td>2 Queen</td>
+                        <td>—</td>
+                        <td class="rating">4.9 ⭐</td>
+                        <td><a href="https://rvshare.com/rv-rental?location=Idaho%20Falls%2C%20Montana&start_date=2026-08-21&end_date=2026-08-28&rv_class=Class%20C%20Motor%20Home" class="booking-link">View & Book</a></td>
+                    </tr>
+                    <tr>
+                        <td class="rv-name">2017 Thor Motor Coach 24C</td>
+                        <td>Bozeman</td>
+                        <td>24 ft</td>
+                        <td class="price">$2,871</td>
+                        <td>1 Queen</td>
+                        <td>—</td>
+                        <td class="rating">5.0 ⭐</td>
+                        <td><a href="https://rvshare.com/rv-rental?location=Bozeman%2C%20Montana&start_date=2026-08-21&end_date=2026-08-28&rv_class=Class%20C%20Motor%20Home" class="booking-link">View & Book</a></td>
+                    </tr>
+                    <tr>
+                        <td class="rv-name">The Brandywine</td>
+                        <td>Three-Forks</td>
+                        <td>30 ft</td>
+                        <td class="price">$2,762.93</td>
+                        <td>2 Queen</td>
+                        <td>—</td>
+                        <td class="rating">—</td>
+                        <td><a href="https://www.rvezy.com/rv-rental/idaho_rexburg_motorhome_classc_thor-motor-coach_majestic-28a_40d0e7?Adults=4&StartDate=2026-08-21&EndDate=2026-08-28&Types=Campervan&Types=ClassA&Types=ClassB&Types=ClassC&Types=TruckCamper" class="booking-link">View & Book</a></td>
+                    </tr>
+                    <tr>
+                        <td class="rv-name">2019 Thor Four Winds Majestic</td>
+                        <td>Belgrade</td>
+                        <td>30 ft</td>
+                        <td class="price">$2,815.60</td>
+                        <td>2 Queen</td>
+                        <td>—</td>
+                        <td class="rating">—</td>
+                        <td><a href="https://www.bozemanrvadventures.com/bookings?wb_state=eyJwYWdlIjoibGlzdGluZy1kZXRhaWxzIiwicmVudGFsSWQiOjUxNzE3Niwic2VhcmNoUGFyYW1zIjp7ImFkdWx0cyI6NCwiZnJvbSI6IjIwMjYtMDgtMjEiLCJ0byI6IjIwMjYtMDgtMjgifSwibG9jYWxlIjoiZW4tdXMifQ%3D%3D" class="booking-link">View & Book</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rv-grid">
+            <!-- Card 1: Jayco Redhawk -->
+            <div class="rv-card">
+                <div class="card-photos">
+                    <img src="https://images.unsplash.com/photo-1527519925761-f218d7b7b167?w=500&h=300&fit=crop" alt="Jayco RV Exterior" class="card-photo">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=300&fit=crop" alt="RV Interior" class="card-photo">
+                </div>
+                <div class="card-header">
+                    <div class="card-title">2019 Jayco Redhawk 26XD</div>
+                    <div class="card-location">Idaho Falls, ID</div>
+                </div>
+                <div class="card-price-section">
+                    <div class="price-label">7-Night Total</div>
+                    <div class="price-value">$2,820</div>
+                </div>
+                <div class="card-body">
+                    <div class="feature">
+                        <span class="feature-label">Sleeps</span>
+                        <span class="feature-value">6 people</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Length</span>
+                        <span class="feature-value">26 feet</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Queen Beds</span>
+                        <span class="feature-value">2</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Host Rating</span>
+                        <span class="feature-value"><span class="rating-badge">4.8 ⭐ Guest Favorite</span></span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Highlights</span>
+                        <span class="feature-value"><span class="badge badge-primary">Pet Friendly</span></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://rvshare.com" class="platform-link">View on RVShare</a>
+                </div>
+            </div>
+
+            <!-- Card 2: Thor Majestic 2009 (BEST VALUE) -->
+            <div class="rv-card best-value">
+                <div class="card-photos">
+                    <img src="https://images.unsplash.com/photo-1549399542-7e3f8b83ad6e?w=500&h=300&fit=crop" alt="Thor RV Exterior" class="card-photo">
+                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&h=300&fit=crop" alt="RV Interior Kitchen" class="card-photo">
+                </div>
+                <div class="card-header">
+                    <div class="card-title">2009 Thor Motor Coach Majestic</div>
+                    <div class="card-location">Idaho Falls, ID • Best Value</div>
+                </div>
+                <div class="card-price-section">
+                    <div class="price-label">7-Night Total</div>
+                    <div class="price-value">$1,940</div>
+                </div>
+                <div class="card-body">
+                    <div class="feature">
+                        <span class="feature-label">Sleeps</span>
+                        <span class="feature-value">7 people</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Length</span>
+                        <span class="feature-value">29 feet</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Queen Beds</span>
+                        <span class="feature-value">2</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Host Rating</span>
+                        <span class="feature-value"><span class="rating-badge">4.9 ⭐ Guest Favorite</span></span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Highlights</span>
+                        <span class="feature-value"><span class="badge badge-success">Offers Delivery</span></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://rvshare.com" class="platform-link">View on RVShare</a>
+                </div>
+            </div>
+
+            <!-- Card 3: Thor 24C (BEST RATING) -->
+            <div class="rv-card best-rating">
+                <div class="card-photos">
+                    <img src="https://images.unsplash.com/photo-1604882904223-a00e6287b51f?w=500&h=300&fit=crop" alt="Compact RV Exterior" class="card-photo">
+                    <img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=500&h=300&fit=crop" alt="RV Interior Bedroom" class="card-photo">
+                </div>
+                <div class="card-header">
+                    <div class="card-title">2017 Thor Motor Coach 24C</div>
+                    <div class="card-location">Bozeman, MT • Perfect Rating</div>
+                </div>
+                <div class="card-price-section">
+                    <div class="price-label">7-Night Total</div>
+                    <div class="price-value">$2,871</div>
+                </div>
+                <div class="card-body">
+                    <div class="feature">
+                        <span class="feature-label">Sleeps</span>
+                        <span class="feature-value">6 people</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Length</span>
+                        <span class="feature-value">24 feet (Compact)</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Queen Beds</span>
+                        <span class="feature-value">1</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Host Rating</span>
+                        <span class="feature-value"><span class="rating-badge">5.0 ⭐ Perfect</span></span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Highlights</span>
+                        <span class="feature-value"><span class="badge badge-success">Easy to Drive</span></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://rvshare.com" class="platform-link">View on RVShare</a>
+                </div>
+            </div>
+
+            <!-- Card 4: The Brandywine -->
+            <div class="rv-card best-space">
+                <div class="card-photos">
+                    <img src="https://images.unsplash.com/photo-1578496316362-b6a4f53ba3be?w=500&h=300&fit=crop" alt="Modern RV Exterior" class="card-photo">
+                    <img src="https://images.unsplash.com/photo-1485183012986-bf14e3f0d828?w=500&h=300&fit=crop" alt="RV Interior Living" class="card-photo">
+                </div>
+                <div class="card-header">
+                    <div class="card-title">The Brandywine</div>
+                    <div class="card-location">Three-Forks, MT • Most Space</div>
+                </div>
+                <div class="card-price-section">
+                    <div class="price-label">7-Night Total</div>
+                    <div class="price-value">$2,762.93</div>
+                </div>
+                <div class="card-body">
+                    <div class="feature">
+                        <span class="feature-label">Model</span>
+                        <span class="feature-value">2019 Thor Majestic 28A</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Length</span>
+                        <span class="feature-value">30 feet</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Queen Beds</span>
+                        <span class="feature-value">2</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Sleeps</span>
+                        <span class="feature-value">5 people</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Highlights</span>
+                        <span class="feature-value"><span class="badge badge-primary">Pet Friendly</span><span class="badge badge-primary">Delivery Available</span></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://rvezy.com" class="platform-link">View on RVezy</a>
+                </div>
+            </div>
+
+            <!-- Card 5: Bozeman RV Adventures Thor -->
+            <div class="rv-card">
+                <div class="card-photos">
+                    <img src="https://images.unsplash.com/photo-1552632140-cb184e22bded?w=500&h=300&fit=crop" alt="Thor Majestic Exterior" class="card-photo">
+                    <img src="https://images.unsplash.com/photo-1516382799033-20fbbf3a6e0e?w=500&h=300&fit=crop" alt="RV Interior Layout" class="card-photo">
+                </div>
+                <div class="card-header">
+                    <div class="card-title">2019 Thor Four Winds</div>
+                    <div class="card-location">Belgrade, MT • Local Operator</div>
+                </div>
+                <div class="card-price-section">
+                    <div class="price-label">7-Night Total</div>
+                    <div class="price-value">$2,815.60</div>
+                </div>
+                <div class="card-body">
+                    <div class="feature">
+                        <span class="feature-label">Model</span>
+                        <span class="feature-value">Thor Majestic</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Length</span>
+                        <span class="feature-value">30 feet</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Queen Beds</span>
+                        <span class="feature-value">2</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Sleeps</span>
+                        <span class="feature-value">6 people</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-label">Highlights</span>
+                        <span class="feature-value"><span class="badge badge-primary">Free Local Pickup</span><span class="badge badge-primary">Pet Friendly</span></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://bozemanrvadventures.com" class="platform-link">View Listing</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h2>📋 Quick Recommendations</h2>
+            <div class="summary-grid">
+                <div class="summary-item best-pick">
+                    <h3>💰 Best Value</h3>
+                    <p><strong>2009 Thor Motor Coach Majestic</strong> - Only $1,940! Has delivery option and excellent 4.9★ rating. Sleeps 7 people.</p>
+                </div>
+                <div class="summary-item best-pick">
+                    <h3>⭐ Best Rating</h3>
+                    <p><strong>2017 Thor Motor Coach 24C</strong> - Perfect 5.0★ rating! Compact 24 ft model, easier to drive. Great reviews.</p>
+                </div>
+                <div class="summary-item best-pick">
+                    <h3>🏠 Most Space</h3>
+                    <p><strong>The Brandywine or Bozeman Thor</strong> - Both 30 feet with modern amenities. Pet-friendly options available.</p>
+                </div>
+                <div class="summary-item">
+                    <h3>📞 Next Steps</h3>
+                    <p>Contact hosts for fuel type & MPG specs. Check cancellation policies. Book soon for summer dates!</p>
+                </div>
+                <div class="summary-item">
+                    <h3>📊 Price Range</h3>
+                    <p>$1,940 - $2,871 for the week. All under your $3,000 budget with room to spare for gas & food.</p>
+                </div>
+                <div class="summary-item">
+                    <h3>🎯 Budget Summary</h3>
+                    <p>Lowest: $1,940 | Mid-range: $2,762-$2,820 | Highest: $2,871. All sleep 5-7 people.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <p>All prices are 7-night totals (Aug 21-28, 2026) including taxes & fees. Contact hosts for detailed specifications and current availability.</p>
+        </div>
+    </div>
+</body>
+</html>
